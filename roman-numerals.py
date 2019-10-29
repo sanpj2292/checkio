@@ -7,12 +7,21 @@ def initialize():
     rom_dict[100] = 'C'
     rom_dict[500] = 'D'
     rom_dict[1000] = 'M'
-    print(form_roman_numerals(1, 5, 1, rom_dict))
-    form_roman_numerals(5, 10, 1, rom_dict)
-    print(rom_dict)
+    # print(form_roman_numerals(1, 5, 1, rom_dict))
+    # form_roman_numerals(5, 10, 1, rom_dict)
+    diff = 10
+    st = 10
+    en = 100
+    a = list(range(st+diff, st+4*diff, diff))
+    print(f'alist1: {a}')
+    a.extend(range((5*diff)+10, en, diff))
+    print(f'alist2: {a}')
+
+    # print(rom_dict)
 
 
 def form_roman_numerals(st, en, diff, roman_dict):
+    range(st+diff, st + 4*diff + 1, diff)
     for i in range(st+1, en, diff):
         if (i-st) <= 2*diff:
             print(f'<2*diff: {i}')
