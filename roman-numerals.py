@@ -9,58 +9,73 @@ def initialize():
     rom_dict[1000] = 'M'
     # print(form_roman_numerals(1, 5, 1, rom_dict))
     # form_roman_numerals(5, 10, 1, rom_dict)
-    diff = 10
-    st = 10
-    en = 100
-    a = list(range(st+diff, st+4*diff, diff))
-    print(f'alist1: {a}')
-    a.extend(range((5*diff)+10, en, diff))
-    print(f'alist2: {a}')
+    diff = 1
+    st = 1
+    en = 10
+    i = 0
+    while i < 4:
+        en_1 = st + 4*diff
+        is_true = en < en_1
+        if is_true:
+            en_1 = en
+        # Range Formation
+        a = list(range(st+diff, en_1, diff))
+        a.extend(range((5*diff)+diff, en, diff))
+        roman = form_roman_numerals(a, diff, rom_dict, is_true)
+        st *= 10
+        en = 10*en if i < 2 else 3999
+        diff *= 10
+        i += 1
+    return roman
 
-    # print(rom_dict)
 
-
-def form_roman_numerals(st, en, diff, roman_dict):
-    range(st+diff, st + 4*diff + 1, diff)
-    for i in range(st+1, en, diff):
-        if (i-st) <= 2*diff:
-            print(f'<2*diff: {i}')
-            print(roman_dict[st])
-            roman_dict[i] = roman_dict[st] * ((i)//diff)
-        elif i-st == 3*diff:
-            print(f'==3*diff: {i}')
-            roman_dict[i] = roman_dict[st] + roman_dict[en]
-    return roman_dict
+def form_roman_numerals(rng, diff, r_dict, is_true):
+    st = rng[0] - diff
+    en = rng[-1] + diff
+    mid = 5*diff
+    for i, n in enumerate(rng):
+        if i < 2:
+            r_dict[n] = r_dict[st] * (n // diff)
+        elif i == 2:
+            r_dict[n] = f'{r_dict[st]}{r_dict[mid]}'
+        elif i > 2 and i < 6:
+            r_dict[n] = f'{r_dict[5*diff]}{r_dict[st] * ((n-mid)//diff)}'
+        else:
+            r_dict[n] = f'{r_dict[st]}{r_dict[en]}'
+    return r_dict
 
 
 def split_nums(n):
     n_str = str(n)
     l = len(n_str)
     d = 10 ** (l-1)
-    print(d)
     s = 0
     i = -1
     sums = []
     num_str = n_str[:]
     while(s < n):
-        s += int(num_str[0])*d
-        print(f's = {s}')
-        sums.append(int(num_str[0])*d)
+        if int(num_str[0]) != 0:
+            s += int(num_str[0])*d
+            sums.append(int(num_str[0])*d)
         i += 1
         if len(num_str) > 1:
             num_str = num_str[1:]
         else:
             num_str = num_str[0]
-
-        print(f'NumList: {num_str}')
         d = int(10 ** (len(num_str) - 1))
-        print(f'd: {d}')
-
     return sums
 
 
+def get_roman_numeral(num, r_d):
+    num_list = split_nums(num)
+    rom_list = [r_d[n] for n in num_list]
+    return ''.join(rom_list)
+
+
 if __name__ == "__main__":
-    print(initialize())
-    # print(split_nums(1252))
-    # print(split_nums(100))
-    # print(split_nums(1))
+    roman_dict = initialize()
+    # print(get_roman_numeral(1234, roman_dict))
+    # print(get_roman_numeral(14, roman_dict))
+    # print(get_roman_numeral(602, roman_dict))
+    # print(get_roman_numeral(602, roman_dict))
+    print(split_nums(602))
