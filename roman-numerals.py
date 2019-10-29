@@ -7,8 +7,6 @@ def initialize():
     rom_dict[100] = 'C'
     rom_dict[500] = 'D'
     rom_dict[1000] = 'M'
-    # print(form_roman_numerals(1, 5, 1, rom_dict))
-    # form_roman_numerals(5, 10, 1, rom_dict)
     diff = 1
     st = 1
     en = 10
@@ -21,7 +19,8 @@ def initialize():
         # Range Formation
         a = list(range(st+diff, en_1, diff))
         a.extend(range((5*diff)+diff, en, diff))
-        roman = form_roman_numerals(a, diff, rom_dict, is_true)
+        # Dictionary of Important Roman Numerals
+        roman = form_roman_numerals(a, diff, rom_dict)
         st *= 10
         en = 10*en if i < 2 else 3999
         diff *= 10
@@ -29,7 +28,7 @@ def initialize():
     return roman
 
 
-def form_roman_numerals(rng, diff, r_dict, is_true):
+def form_roman_numerals(rng, diff, r_dict):
     st = rng[0] - diff
     en = rng[-1] + diff
     mid = 5*diff
@@ -46,6 +45,7 @@ def form_roman_numerals(rng, diff, r_dict, is_true):
 
 
 def split_nums(n):
+    # Splits numbers according to their units
     n_str = str(n)
     l = len(n_str)
     d = 10 ** (l-1)
@@ -75,7 +75,7 @@ def get_roman_numeral(num, r_d):
 if __name__ == "__main__":
     roman_dict = initialize()
     # print(get_roman_numeral(1234, roman_dict))
-    # print(get_roman_numeral(14, roman_dict))
-    # print(get_roman_numeral(602, roman_dict))
+    print(get_roman_numeral(14, roman_dict))
+    print(get_roman_numeral(602, roman_dict))
     # print(get_roman_numeral(602, roman_dict))
     print(split_nums(602))
