@@ -25,7 +25,7 @@ def is_balanced(s):
     stack = Stack()
     if re.match(r'[\[{(\]})]', s):
         ref = {']': '[', '}': '{', ')': '('}
-        for i, c in enumerate(s):
+        for c in s:
             if re.match(r'[\[{(]', c):
                 # left braces match
                 stack.insert(c)
